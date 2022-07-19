@@ -1,0 +1,23 @@
+const MinTempIcon = () => {
+  return (
+    <svg
+      className="h-6 w-6 m-1 text-blue-500 inline"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      stroke-width="2"
+      stroke="currentColor"
+      fill="none"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      {" "}
+      <path stroke="none" d="M0 0h24v24H0z" />{" "}
+      <path d="M8 13.5a4 4 0 1 0 4 0v-8.5a2 2 0 0 0 -4 0v8.5" />{" "}
+      <line x1="8" y1="9" x2="12" y2="9" />{" "}
+      <line x1="16" y1="9" x2="22" y2="9" />
+    </svg>
+  );
+};
+
+export default MinTempIcon;

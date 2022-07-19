@@ -1,0 +1,29 @@
+version: "3"
+services:
+  syncstart:
+    image: francesco99975/syncstart
+    ports:
+      - "5500:5500"
+    networks:
+      - syncnet
+    depends_on:
+      - "mongo"
+  mongo:
+    image: "mongo:4.4.5-bionic"
+    ports:
+      - "2717:27017"
+    networks:
+      - syncnet
+    volumes:
+      - syncstart-data:/data/db
+      - syncstart-mongo-config:/data/configdb
+
+networks:
+  syncnet:
+    driver: bridge
+
+volumes:
+  syncstart-data:
+    driver: local
+  syncstart-mongo-config:
+    driver: local
