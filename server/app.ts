@@ -30,7 +30,7 @@ declare global {
 
 const app = express();
 
-const PORT = process.env.PORT || 5500;
+const PORT = process.env.PORT || 5342;
 
 app.use(cors());
 app.use(express.json());

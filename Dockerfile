@@ -10,6 +10,9 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 5500
+RUN npm run build:client
+RUN npm run build:server
 
-CMD [ "npm", "start" ]
+EXPOSE 5342
+
+CMD [ "node", "./dist/server.js" ]

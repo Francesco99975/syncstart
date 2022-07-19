@@ -70,7 +70,7 @@ function App() {
     if (typeof window !== "undefined") {
       const backgroundData = await axios.get(
         `${
-          process.env.NODE_ENV === "development" ? "http://localhost:5500" : ""
+          process.env.NODE_ENV === "development" ? "http://localhost:5342" : ""
         }/background`
       );
 

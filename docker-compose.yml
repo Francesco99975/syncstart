@@ -3,7 +3,7 @@ services:
   syncstart:
     image: francesco99975/syncstart
     ports:
-      - "5500:5500"
+      - "5342:5342"
     networks:
       - syncnet
     depends_on:
@@ -11,7 +11,7 @@ services:
   mongo:
     image: "mongo:4.4.5-bionic"
     ports:
-      - "2717:27017"
+      - "2718:27017"
     networks:
       - syncnet
     volumes:

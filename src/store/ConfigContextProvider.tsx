@@ -13,7 +13,7 @@ import db from "../database/db";
 import SnackbarContext from "./snackbar-context";
 
 const BASE_URL =
-  process.env.NODE_ENV === "development" ? "http://localhost:5500" : "";
+  process.env.NODE_ENV === "development" ? "http://localhost:5342" : "";
 
 const ConfigContextProvider = (props: PropsWithChildren<any>) => {
   const { displayMessage } = useContext(SnackbarContext);
