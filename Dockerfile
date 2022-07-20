@@ -1,8 +1,8 @@
-FROM node:16.5-alpine
+FROM node:16.5-alpine AS build
 
 RUN apk add --update rsync
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY package.json .
 
@@ -12,6 +12,12 @@ COPY . .
 
 RUN npm run build:client
 RUN npm run build:server
+
+FROM node:16.5-alpine
+WORKDIR /usr/src/app
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/.env .
 
 EXPOSE 5342
 

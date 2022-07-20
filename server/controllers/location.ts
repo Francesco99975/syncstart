@@ -26,7 +26,7 @@ export const setLocation = async (
 
     await syncData.save();
 
-    res.redirect("/weather");
+    next("/weather");
   } catch (error) {
     next(error);
   }

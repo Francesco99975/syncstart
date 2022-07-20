@@ -11,7 +11,7 @@ services:
   mongo:
     image: "mongo:4.4.5-bionic"
     ports:
-      - "2718:27017"
+      - "2717:27017"
     networks:
       - syncnet
     volumes:
