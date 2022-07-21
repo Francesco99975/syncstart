@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 
 const CreditsBuild = (props: PropsWithChildren<any>) => {
   return (
-    <div className="fixed bottom-0 left-0 bg-transparent backdrop-blur-xl m-1 p-2 rounded z-30 text-slate-900 dark:text-slate-200 text-base w-auto">
+    <div className="fixed bottom-0 left-0 bg-transparent backdrop-blur-xl m-1 p-2 rounded z-30 text-slate-900 dark:text-slate-200 text-base w-fit dark:bg-slate-900 bg-slate-200 !bg-opacity-20">
       <span>Photo by </span>
       <a target="blank" href={props.photographer.link}>
         {props.photographer.name}

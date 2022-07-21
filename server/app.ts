@@ -5,6 +5,8 @@ import express from "express";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
 import App from "../src/App";
+import SnackbarContextProvider from "../src/store/SnackbarContextProvider";
+import ConfigContextProvider from "../src/store/ConfigContextProvider";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -46,7 +48,15 @@ const manifest = fs.readFileSync(
 const assets = JSON.parse(manifest);
 
 app.get("/", (req, res, next) => {
-  const component = ReactDOMServer.renderToString(React.createElement(App));
+  const component = ReactDOMServer.renderToString(
+    React.createElement(React.StrictMode, {
+      children: React.createElement(SnackbarContextProvider, {
+        children: React.createElement(ConfigContextProvider, {
+          children: React.createElement(App),
+        }),
+      }),
+    })
+  );
   res.render("index", { assets, component });
 });
 

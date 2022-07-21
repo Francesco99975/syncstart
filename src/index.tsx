@@ -8,20 +8,31 @@ import axios from "axios";
 import SnackbarContextProvider from "./store/SnackbarContextProvider";
 
 if (typeof window !== "undefined") {
-  const root = ReactDOM.hydrateRoot(
-    document.getElementById("root") as HTMLElement,
-    <App />
-  );
-
-  root.render(
-    <React.StrictMode>
-      <SnackbarContextProvider>
-        <ConfigContextProvider>
-          <App />
-        </ConfigContextProvider>
-      </SnackbarContextProvider>
-    </React.StrictMode>
-  );
+  if (process.env.NODE_ENV === "development") {
+    const root = ReactDOM.createRoot(
+      document.getElementById("root") as HTMLElement
+    );
+    root.render(
+      <React.StrictMode>
+        <SnackbarContextProvider>
+          <ConfigContextProvider>
+            <App />
+          </ConfigContextProvider>
+        </SnackbarContextProvider>
+      </React.StrictMode>
+    );
+  } else {
+    ReactDOM.hydrateRoot(
+      document.getElementById("root") as HTMLElement,
+      <React.StrictMode>
+        <SnackbarContextProvider>
+          <ConfigContextProvider>
+            <App />
+          </ConfigContextProvider>
+        </SnackbarContextProvider>
+      </React.StrictMode>
+    );
+  }
 
   axios.interceptors.request.use((request) => {
     request.headers!["X-USER-ID"] =

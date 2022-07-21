@@ -34,7 +34,7 @@ const Information = (props: PropsWithChildren<any>) => {
     sunset.setUTCSeconds(currentWeather?.sys.sunset!);
     weatherDisplay = (
       <div className="flex w-3/4 text-slate-900 dark:text-slate-200 justify-between rounded">
-        <div className="flex flex-col backdrop-blur-xl rounded text-center justify-center w-[40%] md:w-[25%]">
+        <div className="flex flex-col backdrop-blur-xl rounded text-center justify-center w-[40%] md:w-[25%] dark:bg-slate-900 bg-slate-200 !bg-opacity-20">
           <span>{currentWeather?.name}</span>
           <span>
             <TempIcon /> {Math.round(currentWeather?.main.temp!)}
@@ -53,7 +53,7 @@ const Information = (props: PropsWithChildren<any>) => {
             {unitFormat ? <CelsiusIcon /> : <FahrenheitIcon />}
           </span>
         </div>
-        <div className="flex flex-col backdrop-blur-xl rounded text-center justify-center w-[40%] md:w-[25%]">
+        <div className="flex flex-col backdrop-blur-xl rounded text-center justify-center w-[40%] md:w-[25%] dark:bg-slate-900 bg-slate-200 !bg-opacity-20">
           <span>
             <HumidityIcon /> {currentWeather?.main.humidity}%
           </span>
@@ -91,7 +91,7 @@ const Information = (props: PropsWithChildren<any>) => {
   return (
     <>
       <div className="mb-2 mt-1 w-full text-center flex justify-center items-center">
-        <h1 className="text-slate-900 dark:text-slate-200 text-5xl backdrop-blur-xl p-2 rounded">
+        <h1 className="text-slate-900 dark:text-slate-200 text-5xl backdrop-blur-xl p-2 rounded dark:bg-slate-900 bg-slate-200 !bg-opacity-20">
           {(clockFormat
             ? time.getHours()
             : time.getHours() % 12 !== 0

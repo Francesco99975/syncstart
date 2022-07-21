@@ -17,6 +17,7 @@ const QuickLinks = () => {
     event.preventDefault();
     if (enteredLink.current!.value.trim().length > 0) {
       addQuickLink(enteredLink.current!.value.trim());
+      enteredLink.current!.value = "";
     }
   };
 

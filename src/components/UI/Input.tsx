@@ -10,7 +10,10 @@ interface InputProps {
 const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   return (
     <div className="flex flex-col w-full p-2 justify-around">
-      <label className="text-slate-900 dark:text-slate-200" htmlFor={props.id}>
+      <label
+        className="text-slate-900 dark:text-slate-200 w-fit p-1 backdrop-blur-xl rounded dark:bg-slate-900 bg-slate-200 !bg-opacity-20"
+        htmlFor={props.id}
+      >
         {props.label}
       </label>
       <input
