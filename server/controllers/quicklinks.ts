@@ -43,7 +43,7 @@ const getNameFromUrl = (url: string) => {
 
 const getBaseUrl = (url: string) => {
   const index = url.substring(url.indexOf("://") + 3).indexOf("/");
-  if (index < 0) return url.substring(0);
+  if (index < 0) return url;
   return url.substring(0, index + 8);
 };
 
