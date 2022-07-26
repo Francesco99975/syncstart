@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getWeatherData } from "../controllers/weather";
-import checkId from "../helpers/checkId";
+import checkId from "../middlewares/checkId";
 
 const router = Router();
 

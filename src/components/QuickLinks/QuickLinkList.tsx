@@ -9,21 +9,21 @@ interface QlProps {
 //   return str.at(0)?.toUpperCase() + str.substring(1);
 // };
 
-const getWebsiteStartChar = (str: string) => {
-  str = str.substring(str.indexOf("/") + 2);
+// const getWebsiteStartChar = (str: string) => {
+//   str = str.substring(str.indexOf("/") + 2);
 
-  let sub = str;
+//   let sub = str;
 
-  if (sub.includes("/")) {
-    sub = str.substring(0, sub.indexOf("/"));
-  }
+//   if (sub.includes("/")) {
+//     sub = str.substring(0, sub.indexOf("/"));
+//   }
 
-  let reversed = sub.split("").reverse().join("");
-  let sliced = reversed.slice(reversed.indexOf(".") + 1);
-  return sliced.includes(".")
-    ? sliced[sliced.indexOf(".") - 1].toLocaleUpperCase()
-    : sliced[sliced.length - 1].toUpperCase();
-};
+//   let reversed = sub.split("").reverse().join("");
+//   let sliced = reversed.slice(reversed.indexOf(".") + 1);
+//   return sliced.includes(".")
+//     ? sliced[sliced.indexOf(".") - 1].toLocaleUpperCase()
+//     : sliced[sliced.length - 1].toUpperCase();
+// };
 
 const QuickLinkList = (props: QlProps) => {
   return (
@@ -36,7 +36,7 @@ const QuickLinkList = (props: QlProps) => {
             url={link.url}
             icon={link.icon}
             name={link.name}
-            fallback={getWebsiteStartChar(link.url)}
+            fallback={link.name[0]}
           />
         );
       })}

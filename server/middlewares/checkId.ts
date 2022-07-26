@@ -9,9 +9,9 @@ const checkId = (req: Request, res: Response, next: NextFunction) => {
     }
     req.syncId = id;
 
-    next();
+    return next();
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };
 

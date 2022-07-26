@@ -1,6 +1,7 @@
 version: "3"
 services:
   syncstart:
+    container_name: syncstart
     image: francesco99975/syncstart
     ports:
       - "5342:5342"
@@ -9,6 +10,7 @@ services:
     depends_on:
       - "mongo"
   mongo:
+    container_name: syncstart-db
     image: "mongo:4.4.5-bionic"
     ports:
       - "2717:27017"

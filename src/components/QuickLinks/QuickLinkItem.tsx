@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import useLongPress from "../../hooks/useLongPress";
 import ConfigContext from "../../store/config-context";
 import BackIcon from "../Icons/BackIcon";
@@ -36,7 +36,9 @@ const QuickLinkItem = (props: LinkProps) => {
     setIsRemovable(true);
   };
 
-  const onClick = () => {};
+  const onClick = () => {
+    window.location.assign(props.url);
+  };
 
   const defaultOptions = {
     shouldPreventDefault: true,
@@ -45,26 +47,23 @@ const QuickLinkItem = (props: LinkProps) => {
   const longPressEvent = useLongPress(onLongPress, onClick, defaultOptions);
 
   return (
-    <>
-      {!isRemovable && (
-        <li
-          className="m-2 relative"
-          onMouseEnter={removeVisibilityHandler.bind(null, true)}
-          onMouseLeave={removeVisibilityHandler.bind(null, false)}
-          {...longPressEvent}
+    <div
+      className="relative"
+      onMouseEnter={removeVisibilityHandler.bind(null, true)}
+      onMouseLeave={removeVisibilityHandler.bind(null, false)}
+    >
+      {isRemoveVisible && (
+        <span
+          onClick={removeLinkHandler}
+          role="button"
+          className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-red-600 text-white text-center cursor-pointer z-10 flex items-center justify-center"
         >
-          {isRemoveVisible && (
-            <span
-              onClick={removeLinkHandler}
-              className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-red-600 text-white text-center cursor-pointer z-10 flex items-center justify-center"
-            >
-              <TrashIcon className="h-6 w-6" />
-            </span>
-          )}
-          <a
-            href={props.url}
-            className="flex flex-col justify-between items-center p-2 bg-slate-800 rounded h-24 w-24"
-          >
+          <TrashIcon className="h-6 w-6" />
+        </span>
+      )}
+      {!isRemovable && (
+        <li className="m-2" {...longPressEvent}>
+          <div className="flex flex-col justify-between items-center p-2 bg-slate-800 rounded h-24 w-24">
             {!imageError && (
               <img
                 onError={imageErrorHandler}
@@ -84,7 +83,7 @@ const QuickLinkItem = (props: LinkProps) => {
             <span className="p-1 text-center text-white max-w-full overflow-hidden whitespace-nowrap overflow-ellipsis">
               {props.name}
             </span>
-          </a>
+          </div>
         </li>
       )}
       {isRemovable && (
@@ -103,7 +102,7 @@ const QuickLinkItem = (props: LinkProps) => {
           </div>
         </li>
       )}
-    </>
+    </div>
   );
 };
 

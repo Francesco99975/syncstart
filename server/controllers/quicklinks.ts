@@ -1,26 +1,50 @@
 import { NextFunction, Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
+import validator from "validator";
 import fetch from "node-fetch";
+import { parse } from "node-html-parser";
 import { HttpException } from "../interfaces/error";
 import SyncData from "../models/syncData";
 
 const capitalize = (str: string) => {
-  return str[0].toUpperCase() + str.substring(1);
+  const index = str.indexOf("@");
+  return index < 0
+    ? str[0].toUpperCase() + str.substring(1)
+    : str[0].toUpperCase() +
+        str.substring(1, index) +
+        str[index].toUpperCase() +
+        str.substring(index);
 };
 
-const parseTitle = (body: string) => {
-  let match = body.match(/<title>([^<]*)<\/title>/); // regular expression to parse contents of the <title> tag
-  if (!match || typeof match[1] !== "string")
-    throw new Error("Unable to parse the title tag");
-  return match[1];
+// const parseIcon = (body: string) => {
+//   let match = body.match(/<title>([^<]*)<\/title>/); // regular expression to parse contents of the <title> tag
+//   if (!match || typeof match[1] !== "string")
+//     throw new Error("Unable to parse the title tag");
+//   return match[1];
+// };
+
+// const removeTrailingSlash = (str: string) => {
+//   if (str[str.length - 1] === "/") {
+//     return str.split("").slice(0, -1).join("");
+//   }
+
+//   return str;
+// };
+
+const getNameFromUrl = (url: string) => {
+  let name = url.substring(url.indexOf("://") + 3, url.lastIndexOf("."));
+
+  if (name.includes("www")) return name.substring(name.indexOf(".") + 1);
+
+  if (name.includes(".")) name = name.replace(".", "@");
+
+  return name;
 };
 
-const removeTrailingSlash = (str: string) => {
-  if (str[str.length - 1] === "/") {
-    return str.split("").slice(0, -1).join("");
-  }
-
-  return str;
+const getBaseUrl = (url: string) => {
+  const index = url.substring(url.indexOf("://") + 3).indexOf("/");
+  if (index < 0) return url.substring(0);
+  return url.substring(0, index + 8);
 };
 
 export const addQuickLink = async (
@@ -29,7 +53,10 @@ export const addQuickLink = async (
   next: NextFunction
 ) => {
   try {
-    const link: string = removeTrailingSlash(req.body.link.trim());
+    let link: string = req.body.link.trim();
+    if (!link.startsWith("http")) {
+      link = "http://" + link;
+    }
     const syncId = req.syncId;
 
     if (!syncId) {
@@ -41,15 +68,27 @@ export const addQuickLink = async (
 
     const syncData = (await SyncData.find({ syncStartId: syncId }))[0];
 
+    const title = getNameFromUrl(link);
     const fetchResponse = await fetch(link);
     const body = await fetchResponse.text();
-    const title = parseTitle(body);
+    const root = parse(body);
+    const elementArray = root
+      .getElementsByTagName("link")
+      .filter((x) => x.hasAttribute("rel") && x.hasAttribute("href"))
+      .filter((x) => x.getAttribute("rel") === "icon");
+    let iconPath: string = getBaseUrl(link) + "/favicon.ico";
+    if (elementArray.length > 0) {
+      iconPath = elementArray[0].getAttribute("href") as string;
+      if (!validator.isURL(iconPath)) {
+        iconPath = getBaseUrl(link) + iconPath;
+      }
+    }
 
     const newQuickLink = {
       id: uuidv4(),
       name: capitalize(title),
       url: link,
-      icon: link + "/favicon.ico",
+      icon: iconPath,
       arbitraryPositioning: syncData.quickLinks.length,
     };
 
