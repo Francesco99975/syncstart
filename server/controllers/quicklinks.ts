@@ -16,12 +16,12 @@ const capitalize = (str: string) => {
         str.substring(index);
 };
 
-// const parseIcon = (body: string) => {
-//   let match = body.match(/<title>([^<]*)<\/title>/); // regular expression to parse contents of the <title> tag
-//   if (!match || typeof match[1] !== "string")
-//     throw new Error("Unable to parse the title tag");
-//   return match[1];
-// };
+const parseTitle = (body: string) => {
+  let match = body.match(/<title>([^<]*)<\/title>/); // regular expression to parse contents of the <title> tag
+  if (!match || typeof match[1] !== "string")
+    throw new Error("Unable to parse the title tag");
+  return match[1];
+};
 
 // const removeTrailingSlash = (str: string) => {
 //   if (str[str.length - 1] === "/") {
@@ -67,10 +67,12 @@ export const addQuickLink = async (
     }
 
     const syncData = (await SyncData.find({ syncStartId: syncId }))[0];
-
-    const title = getNameFromUrl(link);
     const fetchResponse = await fetch(link);
     const body = await fetchResponse.text();
+
+    const title = !link.includes("://localhost")
+      ? getNameFromUrl(link)
+      : parseTitle(body);
     const root = parse(body);
     const elementArray = root
       .getElementsByTagName("link")
