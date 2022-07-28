@@ -70,7 +70,7 @@ function App() {
     if (typeof window !== "undefined") {
       const backgroundData = await axios.get(
         `${
-          process.env.NODE_ENV === "development" ? "http://localhost:5342" : ""
+          process.env.NODE_ENV === "development" ? "http://localhost:5500" : ""
         }/background`
       );
 
@@ -171,7 +171,7 @@ function App() {
     <>
       <Brand />
       <div
-        className="fixed bottom-0 right-0 m-2 cursor-pointer backdrop-blur-xl rounded p-2 dark:bg-slate-900 bg-slate-200 !bg-opacity-20"
+        className="fixed bottom-0 right-0 m-2 z-40 cursor-pointer backdrop-blur-xl rounded p-2 dark:bg-slate-900 bg-slate-200 !bg-opacity-20"
         onClick={settingsHandler}
       >
         <SettingsIcon />

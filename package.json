@@ -33,7 +33,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "build:server": "webpack --config webpack.server.js",
-    "build:client": "webpack --config webpack.client.js && mv ./dist/static/manifest.json ./dist/static/manifest-webpack.json  && rsync -av --progress --exclude 'index.html' ./public/ ./dist/static"
+    "build:client": "webpack --config webpack.client.js && mv ./dist/static/manifest.json ./dist/static/manifest-webpack.json  && rsync -av --progress --exclude 'index.html' ./public/ ./dist/static",
+    "dev:server": "cd server && tsc && rsync -av --progress --exclude={'*.ts*','nodemon.json','tsconfig.json','dist','.vscode','node_modules','src','.git'} . ./dist && tsc-watch --project . --onSuccess 'nodemon ./dist/app.js'",
+    "dev": ""
   },
   "eslintConfig": {
     "extends": [

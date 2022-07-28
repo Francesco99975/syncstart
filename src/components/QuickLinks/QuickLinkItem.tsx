@@ -42,17 +42,13 @@ const QuickLinkItem = (props: LinkProps) => {
 
   const defaultOptions = {
     shouldPreventDefault: true,
-    delay: 500,
+    delay: 1000,
   };
   const longPressEvent = useLongPress(onLongPress, onClick, defaultOptions);
 
   return (
-    <div
-      className="relative"
-      onMouseEnter={removeVisibilityHandler.bind(null, true)}
-      onMouseLeave={removeVisibilityHandler.bind(null, false)}
-    >
-      {isRemoveVisible && (
+    <li className="relative">
+      {isRemoveVisible && !isRemovable && (
         <span
           onClick={removeLinkHandler}
           role="button"
@@ -62,8 +58,13 @@ const QuickLinkItem = (props: LinkProps) => {
         </span>
       )}
       {!isRemovable && (
-        <li className="m-2" {...longPressEvent}>
-          <div className="flex flex-col justify-between items-center p-2 bg-slate-800 rounded h-24 w-24">
+        <div
+          className="m-2"
+          onMouseEnter={removeVisibilityHandler.bind(null, true)}
+          onMouseLeave={removeVisibilityHandler.bind(null, false)}
+          {...longPressEvent}
+        >
+          <div className="flex flex-col justify-between items-center p-2 bg-slate-800 rounded h-20 w-16 md:h-24 md:w-24">
             {!imageError && (
               <img
                 onError={imageErrorHandler}
@@ -80,11 +81,11 @@ const QuickLinkItem = (props: LinkProps) => {
                 {props.fallback}
               </div>
             )}
-            <span className="p-1 text-center text-white max-w-full overflow-hidden whitespace-nowrap overflow-ellipsis">
+            <span className="text-sm md:text-base md:p-1 text-center text-white max-w-full overflow-hidden whitespace-nowrap overflow-ellipsis">
               {props.name}
             </span>
           </div>
-        </li>
+        </div>
       )}
       {isRemovable && (
         <li className="m-2 relative">
@@ -102,7 +103,7 @@ const QuickLinkItem = (props: LinkProps) => {
           </div>
         </li>
       )}
-    </div>
+    </li>
   );
 };
 
