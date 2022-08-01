@@ -9,7 +9,7 @@ import SnackbarContextProvider from "../src/store/SnackbarContextProvider";
 import ConfigContextProvider from "../src/store/ConfigContextProvider";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import cors from "cors";
+//import cors from "cors";
 import quickLinksRoutes from "./routes/quicklinks";
 import bookmarksRoutes from "./routes/bookmarks";
 import locationRoutes from "./routes/location";
@@ -34,7 +34,7 @@ const app = express();
 
 const PORT = process.env.PORT || 5500;
 
-app.use(cors());
+//app.use(cors());
 app.use(express.json());
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));

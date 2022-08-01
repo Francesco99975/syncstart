@@ -30,6 +30,7 @@ const QuickLinkItem = (props: LinkProps) => {
 
   const onReturn = () => {
     setIsRemovable(false);
+    setIsRemoveVisible(false);
   };
 
   const onLongPress = () => {
@@ -96,7 +97,7 @@ const QuickLinkItem = (props: LinkProps) => {
           </span>
           <div
             onClick={removeLinkHandler}
-            className="flex items-center justify-center p-2 bg-red-600 rounded h-24 w-24"
+            className="flex items-center justify-center p-2 bg-red-600 rounded h-20 w-16 md:h-24 md:w-24"
           >
             <TrashIcon />
           </div>

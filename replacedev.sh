@@ -17,3 +17,6 @@ sed -i 's/const assets/*\/ \/\/const assets/g' ./server/app.ts
 
 sed -i 's/app.get("\/"/\/*app.get("\/"/g' ./server/app.ts
 sed -i 's/app.post("\/create"/*\/ app.post("\/create"/g' ./server/app.ts
+
+sed -i 's/\/\/import cors/import cors/g' ./server/app.ts
+sed -i 's/\/\/app.use(cors/app.use(cors/g' ./server/app.ts
