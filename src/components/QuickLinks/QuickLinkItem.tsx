@@ -47,23 +47,22 @@ const QuickLinkItem = (props: LinkProps) => {
   const longPressEvent = useLongPress(onLongPress, onClick, defaultOptions);
 
   return (
-    <li className="relative">
+    <li
+      className="relative cursor-pointer"
+      onMouseEnter={removeVisibilityHandler.bind(null, true)}
+      onMouseLeave={removeVisibilityHandler.bind(null, false)}
+    >
       {isRemoveVisible && !isRemovable && (
         <span
           onClick={removeLinkHandler}
           role="button"
-          className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-red-600 text-white text-center cursor-pointer z-10 flex items-center justify-center"
+          className="absolute top-0 right-0 w-6 h-6 rounded-full bg-red-600 text-white text-center cursor-pointer z-10 flex items-center justify-center"
         >
           <TrashIcon className="h-6 w-6" />
         </span>
       )}
       {!isRemovable && (
-        <div
-          className="m-2"
-          onMouseEnter={removeVisibilityHandler.bind(null, true)}
-          onMouseLeave={removeVisibilityHandler.bind(null, false)}
-          {...longPressEvent}
-        >
+        <div className="m-2" {...longPressEvent}>
           <div className="flex flex-col justify-between items-center p-2 bg-slate-800 rounded h-20 w-16 md:h-24 md:w-24">
             {!imageError && (
               <img

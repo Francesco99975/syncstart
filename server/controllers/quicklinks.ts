@@ -42,9 +42,10 @@ const getNameFromUrl = (url: string) => {
 };
 
 const getBaseUrl = (url: string) => {
+  const CHAR_RESTORE = url.startsWith("https") ? 8 : 7;
   const index = url.substring(url.indexOf("://") + 3).indexOf("/");
   if (index < 0) return url;
-  return url.substring(0, index + 8);
+  return url.substring(0, index + CHAR_RESTORE);
 };
 
 export const addQuickLink = async (

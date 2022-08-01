@@ -5,12 +5,14 @@ import { HttpException } from "../interfaces/error";
 const validateUrl = (req: Request, res: Response, next: NextFunction) => {
   try {
     console.log(req.body.link.trim());
-    if (
-      !validator.isURL(req.body.link.trim(), {
-        protocols: ["http", "https"],
-      })
-    )
-      throw new HttpException(403, "URL not valid");
+    if (!req.body.link.trim().startsWith("http://localhost:")) {
+      if (
+        !validator.isURL(req.body.link.trim(), {
+          protocols: ["http", "https"],
+        })
+      )
+        throw new HttpException(403, "URL not valid");
+    }
 
     return next();
   } catch (error) {

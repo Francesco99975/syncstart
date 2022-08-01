@@ -28,14 +28,14 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=3000 react-scripts start",
     "build": "react-scripts build && mv build client && rsync client ../syncstart-server/",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "build:server": "webpack --config webpack.server.js",
     "build:client": "webpack --config webpack.client.js && mv ./dist/static/manifest.json ./dist/static/manifest-webpack.json  && rsync -av --progress --exclude 'index.html' ./public/ ./dist/static",
-    "dev:server": "tsc ./server && rsync -av --progress --exclude={'*.ts*','nodemon.json','tsconfig.json','dist','.vscode','node_modules','src','.git'} ./server ./server/dist && tsc-watch --project ./server --onSuccess 'nodemon ./server/dist/app.js'",
-    "dev": ""
+    "dev:server": "./replacedev.sh && tsc --p ./server/tsconfig.dev.server.json && rsync -av --progress --exclude={'*.ts*','nodemon.json','tsconfig.json','dist','.vscode','node_modules','src','.git'} ./server ./server/dist && tsc-watch --project ./server/tsconfig.dev.server.json --onSuccess 'nodemon --config ./nodemon.json ./server/dist/app.js && ./restoreprod.sh'",
+    "dev": "npm-run-all --parallel dev:server start"
   },
   "eslintConfig": {
     "extends": [
