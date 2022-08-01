@@ -1,12 +1,12 @@
 import http from "http";
-//import path from "path";
-//import fs from "fs";
+import path from "path";
+import fs from "fs";
 import express from "express";
-//import React from "react";
-////import ReactDOMServer from "react-dom/server";
-//import App from "../src/App";
-//import SnackbarContextProvider from "../src/store/SnackbarContextProvider";
-//import ConfigContextProvider from "../src/store/ConfigContextProvider";
+import React from "react";
+import ReactDOMServer from "react-dom/server";
+import App from "../src/App";
+import SnackbarContextProvider from "../src/store/SnackbarContextProvider";
+import ConfigContextProvider from "../src/store/ConfigContextProvider";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -36,18 +36,18 @@ const PORT = process.env.PORT || 5500;
 
 app.use(cors());
 app.use(express.json());
-//app.set("view engine", "ejs");
-//app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
-//app.use("/", express.static(path.join(__dirname, "static")));
+app.use("/", express.static(path.join(__dirname, "static")));
 
-/*const manifest = fs.readFileSync(
+const manifest = fs.readFileSync(
   path.join(__dirname, "static/manifest-webpack.json"),
   "utf-8"
 );
-*/ //const assets = JSON.parse(manifest);
+const assets = JSON.parse(manifest);
 
-/*app.get("/", (req, res, next) => {
+app.get("/", (req, res, next) => {
   const component = ReactDOMServer.renderToString(
     React.createElement(React.StrictMode, {
       children: React.createElement(SnackbarContextProvider, {
@@ -60,7 +60,7 @@ app.use(express.json());
   res.render("index", { assets, component });
 });
 
-*/ app.post("/create", async (req, res, next) => {
+app.post("/create", async (req, res, next) => {
   try {
     const syncData = await new SyncData({
       syncStartId: uuidv4(),
