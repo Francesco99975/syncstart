@@ -4,7 +4,6 @@ import { HttpException } from "../interfaces/error";
 
 const validateUrl = (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log(req.body.link.trim());
     if (!req.body.link.trim().startsWith("http://localhost:")) {
       if (
         !validator.isURL(req.body.link.trim(), {

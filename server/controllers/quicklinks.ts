@@ -68,23 +68,32 @@ export const addQuickLink = async (
     }
 
     const syncData = (await SyncData.find({ syncStartId: syncId }))[0];
-    const fetchResponse = await fetch(link);
-    const body = await fetchResponse.text();
+    let title: string;
+    let iconPath: string;
+    try {
+      const fetchResponse = await fetch(link);
+      const body = await fetchResponse.text();
 
-    const title = !link.includes("://localhost")
-      ? getNameFromUrl(link)
-      : parseTitle(body);
-    const root = parse(body);
-    const elementArray = root
-      .getElementsByTagName("link")
-      .filter((x) => x.hasAttribute("rel") && x.hasAttribute("href"))
-      .filter((x) => x.getAttribute("rel") === "icon");
-    let iconPath: string = getBaseUrl(link) + "/favicon.ico";
-    if (elementArray.length > 0) {
-      iconPath = elementArray[0].getAttribute("href") as string;
-      if (!validator.isURL(iconPath)) {
-        iconPath = getBaseUrl(link) + iconPath;
+      title = !link.includes("://localhost")
+        ? getNameFromUrl(link)
+        : parseTitle(body);
+      iconPath = getBaseUrl(link) + "/favicon.ico";
+
+      const root = parse(body);
+      const elementArray = root
+        .getElementsByTagName("link")
+        .filter((x) => x.hasAttribute("rel") && x.hasAttribute("href"))
+        .filter((x) => x.getAttribute("rel") === "icon");
+
+      if (elementArray.length > 0) {
+        iconPath = elementArray[0].getAttribute("href") as string;
+        if (!validator.isURL(iconPath)) {
+          iconPath = getBaseUrl(link) + iconPath;
+        }
       }
+    } catch (error) {
+      title = getNameFromUrl(link);
+      iconPath = getBaseUrl(link) + "/favicon.ico";
     }
 
     const newQuickLink = {
