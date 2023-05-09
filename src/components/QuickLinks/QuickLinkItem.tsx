@@ -3,6 +3,7 @@ import useLongPress from "../../hooks/useLongPress";
 import ConfigContext from "../../store/config-context";
 import BackIcon from "../Icons/BackIcon";
 import TrashIcon from "../Icons/TrashIcon";
+import InfoBox from "../UI/InfoBox";
 
 interface LinkProps {
   id: string;
@@ -64,7 +65,8 @@ const QuickLinkItem = (props: LinkProps) => {
       )}
       {!isRemovable && (
         <div className="m-2" {...longPressEvent}>
-          <div className="flex flex-col justify-between items-center p-2 bg-slate-800 rounded h-20 w-16 md:h-24 md:w-24">
+          <div className="relative flex flex-col justify-between items-center p-2 bg-slate-800 rounded h-20 w-16 md:h-24 md:w-24">
+            {isRemoveVisible && <InfoBox content={props.name} />}
             {!imageError && (
               <img
                 onError={imageErrorHandler}

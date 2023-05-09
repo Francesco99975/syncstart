@@ -11,9 +11,9 @@ const capitalize = (str: string) => {
   return index < 0
     ? str[0].toUpperCase() + str.substring(1)
     : str[0].toUpperCase() +
-        str.substring(1, index) +
-        str[index].toUpperCase() +
-        str.substring(index);
+        str.substring(1, index + 1) +
+        str[index + 1].toUpperCase() +
+        str.substring(index + 2);
 };
 
 const parseTitle = (body: string) => {
@@ -74,9 +74,12 @@ export const addQuickLink = async (
       const fetchResponse = await fetch(link);
       const body = await fetchResponse.text();
 
-      title = !link.includes("://localhost")
-        ? getNameFromUrl(link)
-        : parseTitle(body);
+      title =
+        link.includes("://localhost") ||
+        link.includes("://192") ||
+        link.includes("://127")
+          ? parseTitle(body)
+          : getNameFromUrl(link);
       iconPath = getBaseUrl(link) + "/favicon.ico";
 
       const root = parse(body);
